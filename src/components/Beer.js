@@ -1,10 +1,12 @@
-import React from "react"
+import React, {useState} from "react"
 import BeerIngredient from "./BeerIngredient";
 
 
 function Beer({beer}) {
+const [ingrIsShown, setIngrIsShown] = useState(false)
+
     return (
-      <div>
+      <div className="beer-container">
         <h3>{beer.name}</h3>
         <p>Brand: {beer.brand}</p>
         <p>Type: {beer.type}</p>
@@ -12,9 +14,18 @@ function Beer({beer}) {
         <p>Alcohol: {beer.alcohol}</p>
         <p>Id: {beer.id}</p>
 
-        <h4>Ingredients</h4>
-        {beer?.ingredients.map((ingredient, i) => 
-        <BeerIngredient ingredient={ingredient} key={i}/>)} 
+        <div>
+          <h4>Ingredients</h4>
+          <button onClick={()=> setIngrIsShown(!ingrIsShown)}>{ingrIsShown ? "Show less" : "Show more"}</button>
+        </div>
+
+        {ingrIsShown ?
+          <div>
+            {beer?.ingredients.map((ingredient, i) => 
+            <BeerIngredient ingredient={ingredient} key={i}/>)} 
+          </div>
+          : ""
+        }
       
       </div>
     );
